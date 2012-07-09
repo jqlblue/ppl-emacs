@@ -1,0 +1,149 @@
+;; -*- Emacs-Lisp -*-
+;; -*- coding:utf-8 -*-
+;;
+;; ------------------------------------------------------------------------------
+;;
+;; @file        .emacs
+;; @brief
+;; @author      jqlblue(gaoyuan.blue@gmail.com)
+;; @date        2012-07-09
+;;
+;; ------------------------------------------------------------------------------
+;;
+
+;; auto load path below
+(defconst my-emacs-path              "~/.emacs.d/" "my emacs config file path")
+(defconst my-emacs-my-lisps-path     (concat my-emacs-path "my-lisp/") "my lisp package")
+(defconst my-emacs-vendor-lisps-path (concat my-emacs-path "site-lisp/") "the vendor lisp package")
+(defconst my-emacs-settings-path     (concat my-emacs-path "setting/") "my self emacs setting")
+
+;; add all subdir of 'my-emacs-path' to 'load-path'
+(load (concat my-emacs-my-lisps-path "my-subdirs"))
+(my-add-subdirs-to-load-path my-emacs-vendor-lisps-path)
+(my-add-subdirs-to-load-path my-emacs-my-lisps-path)
+(my-add-subdirs-to-load-path my-emacs-settings-path)
+
+;; tramp
+(require 'tramp)
+(require 'password-cache)
+(setq tramp-default-user "gaoyuan")
+(setq tramp-default-method "ssh")
+(setq password-cache-expiry nil)
+
+;; ido
+(ido-mode 1)
+
+; emacs tip 10
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
+
+
+;; slime
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(require 'slime)
+(slime-setup '(slime-fancy))
+
+(defun lisp-indent-or-complete (&optional arg)
+  (interactive "p")
+  (if (or (looking-back "^\\s-*") (bolp))
+      (call-interactively 'lisp-indent-line)
+      (call-interactively 'slime-indent-and-complete-symbol)))
+(eval-after-load "lisp-mode"
+  '(progn
+     (define-key lisp-mode-map (kbd "TAB") 'lisp-indent-or-complete)))
+
+;; scheme
+(setq show-paren-delay 0
+  show-paren-style 'parenthesis)
+(show-paren-mode 1)
+
+(setq scheme-program-name "/usr/local/scheme48/bin/scheme48")
+(autoload 'run-scheme
+          "cmuscheme48"
+          "Run an inferior Scheme process."
+          t)
+;; scheme auto complete
+(autoload 'scheme-smart-complete "scheme-complete" nil t)
+(eval-after-load 'scheme
+  '(define-key scheme-mode-map "\e\t" 'scheme-smart-complete))
+
+(eval-after-load 'scheme
+  '(define-key scheme-mode-map "\t" 'scheme-complete-or-indent))
+
+(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
+(add-hook 'scheme-mode-hook
+  (lambda ()
+    (make-local-variable 'eldoc-documentation-function)
+    (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
+    (eldoc-mode)))
+
+;; python
+(require 'python-settings)
+
+;; php settings
+(require 'php-settings)
+
+;; global-settings
+(require 'global-settings)
+
+; ahei-misc
+(require 'ahei-misc)
+
+; eval-after-load
+(require 'eval-after-load)
+
+(defun visit-.emacs ()
+  "visit .emacs file"
+  (interactive)
+  (find-file (concat "~/" ".emacs")))
+(global-set-key (kbd "C-x E") 'visit-.emacs)
+
+;; yasnippet
+;; (load "yasnippet-settings")
+
+;; auto complete
+(require 'auto-complete-settings)
+
+;;session setting 
+(load "session-settings")
+
+;;font settings
+(load "font-settings")
+
+;; load flymake-settings
+(load "flymake-settings")
+
+;; load doxymacs-1.8.0
+(load "doxymacs-settings")
+
+;; desktop-settings
+(require 'desktop-settings)
+
+;; load ibuffer
+(require 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; emacs xcscope
+(require 'xcscope)
+
+;; emacs ascope
+(require 'ascope)
+
+; mmm Modes
+;(autoload 'mmm-mode "mmm-mode" "Multiple Major Modes" t)
+;(autoload 'mmm-parse-buffer "mmm-mode" "Automatic MMM-ification" t)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(quack-programs (quote ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
+ '(session-use-package t nil (session)))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )

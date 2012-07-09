@@ -1,0 +1,11 @@
+#contributor : Sanpu.Han <hansanpu@gmail.com>
+#name : cmfunc ...(...)
+#group : comment
+# --
+/**
+ * ${1:函数功能描述}
+ * 
+ * @author Sanpu.Han <sanpu@corp.kaixin001.com>
+ * @param ${2:参数名} ${3:参数类型} ${4:参数描述}
+ * @return ${5:类型}
+ */

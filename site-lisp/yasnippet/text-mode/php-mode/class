@@ -1,0 +1,12 @@
+#contributor : Sanpu.Han <hansanpu@gmail.com>
+#name : class ... 
+#group : definitions
+# --
+class ${1:name}
+{
+   public function ${3:__construct}()
+   {
+      $0
+   }
+}
+$2

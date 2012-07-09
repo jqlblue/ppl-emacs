@@ -1,0 +1,8 @@
+#contributor : Sanpu.Han <hansanpu@gmail.com>
+#name : climpl ... 
+#group : definitions
+# --
+class ${1:类名} implements ${2:接口}
+{
+	${3}
+}

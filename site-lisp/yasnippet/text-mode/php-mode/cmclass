@@ -1,0 +1,11 @@
+#contributor : Sanpu.Han <hansanpu@gmail.com>
+#name : cmclass ...(...)
+#group : comment
+# --
+/**
+ * ${1:function_title}
+ *
+ * ${2:description}
+ * 
+ * @author Sanpu.Han <hansanpu@360.cn>
+ */

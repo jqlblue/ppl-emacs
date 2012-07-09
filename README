@@ -1,0 +1,22 @@
+this is my emacs configure ,clone from huhooemacs and add some php related configure
+note:
+to init emacs environment,execute the script init_env.sh
+
+工欲善其事，必先利其器 ------ 孔子（春秋）《论语·卫灵公》
+该项目致力与将emacs打造成一个顺手的开发利器
+目前加入了php，python，common lisp，scheme的集成
+
+目录以及文件结构：
+auto-save-list -- 初始为空，
+emacs.index    -- 将被软连接为~/.emacs，即emacs配置文件
+init_env.sh    -- 初始化脚本
+my-lisp        -- 自定义的emacs插件目录，在配置文件中引用的话，会自动加载项目文件
+README         -- 介绍
+script         -- 要使用的一些脚本文件
+setting        -- 插件设置脚本
+site-lisp      -- emacs插件目录，一般别人写好的插件，我放这里，然后在setting中写一个项目的settings。自己写的，就方my-lisp中。
+tmp            -- 初始为空，
+
+
+ 
+
