@@ -1,21 +1,10 @@
-;; 设置yasnippet
-(require 'yasnippet) ;; not yasnippet-bundle
-(yas/initialize)
-(setq doxymacs-doxygen-style "php")
-
-(defun php-doc-paragraph-boundaries ()
-  (setq paragraph-separate "^[ \t]*\\(\\(/[/\\*]+\\)\\|\\(\\*+/\\)\\|\\(\\*?\\)\\|\\(\\*?[ \t]*@[[:alpha:]]+\\([ \t]+.*\\)?\\)\\)[ \t]*$")
-  (setq paragraph-start (symbol-value 'paragraph-separate)))
-
-(add-hook 'php-mode-user-hook 'php-doc-paragraph-boundaries)
+(require 'php-mode)
 
 (defun my-php-mode()
   ;; 设置php-mode
-  (require 'php-mode)
 
   (add-to-list 'auto-mode-alist
 			   '("\\.php[34]?\\'\\|\\.phtml\\'" . php-mode))
-  (setq php-completion-file "~/.emacs.d/script/php-doc/php-completion-file")
   (defun php-run ()
 	(interactive)
 	(shell-command
@@ -68,7 +57,7 @@
   (define-key php-mode-map [(control c) (t)] 'php-tokens)
 
   (interactive)
-  (setq fill-column 78)
+  ;(setq fill-column 78)
   ;; 设置php程序的对齐风格
   (c-set-style "K&R")
   ;; 自动模式，在此种模式下当你键入{时，会自动根据你设置的对齐风格对齐

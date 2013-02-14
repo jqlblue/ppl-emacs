@@ -1,12 +1,48 @@
 ;;;
 ;;; 全局通用设置
 ;;;
-
+(prefer-coding-system 'utf-8)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (set-scroll-bar-mode nil);;隐藏滚动条
 (mouse-wheel-mode 1) ;响应鼠标滚轮
 (global-linum-mode t)
+
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
+
+(defun visit-emacs-init ()
+  "visit emacs init.el file"
+  (interactive)
+  (find-file (concat "~/.emacs.d/" "init.el")))
+(global-set-key (kbd "C-x E") 'visit-emacs-init)
+
+;;; macros
+(defmacro after (mode &rest body)
+  `(eval-after-load ,mode
+     '(progn ,@body)))
+
+; ido
+(ido-mode t)
+(setq ido-enable-flex-matching t)
+
+(defun mp-ido-hook ()
+  (define-key ido-completion-map (kbd "C-h") 'ido-delete-backward-updir)
+  (define-key ido-completion-map (kbd "C-w") 'ido-delete-backward-word-updir)
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
+  ;; (define-key ido-completion-map (kbd "C-e") 'mp-ido-edit-input)
+  (define-key ido-completion-map [tab] 'ido-complete))
+
+(add-hook 'ido-setup-hook 'mp-ido-hook)
+
+;;; ido-ubiquitous
+
+; undo tree
+(require 'undo-tree)
+(global-undo-tree-mode)
 
 ;最大化
 (defun my-maximized ()
@@ -18,6 +54,23 @@
 )
 (my-maximized)
 
+;; full screen magit-status
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defun magit-quit-session ()
+  "Restore the previous window configuration and kill the magit buffer."
+  (interactive)
+  (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+
+
+(after 'magit
+       (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+       (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+
 (global-set-key [f12] 'my-bars)
 (defun my-bars()
   (interactive)
@@ -25,7 +78,8 @@
   (tool-bar-mode)
   )
 
-(global-set-key [f11] 'my-fullscreen)					;全屏
+;全屏
+(global-set-key [f11] 'my-fullscreen)
 (defun my-fullscreen ()
   (interactive)
   (x-send-client-message
@@ -66,7 +120,8 @@
 
 ;  配色方案
 (require 'color-theme)
-(color-theme-deep-blue)
+(require 'color-theme-solarized)
+(load-theme 'solarized-dark t)
 
 (global-font-lock-mode t);; 语法高亮
 (setq frame-title-format "emacs@%b %f");; 设置 emacs 的标题
@@ -81,7 +136,6 @@
 (setq track-eol t) 
 (setq default-indicate-empty-lines 't)     ;显示文件末尾的空行
 (setq x-select-enable-clipboard t) ;支持emacs和外部程序的粘贴 
-
 ;;;; 显示行号
 (setq column-number-mode t)
 (setq line-number-mode t)
