@@ -78,3 +78,9 @@
 
 ;; load slime
 (load "slime-settings")
+
+;; svn
+(require 'psvn)
+
+;; git
+(require 'magit)

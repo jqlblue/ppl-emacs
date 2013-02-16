@@ -59,7 +59,7 @@ charset
 zh-font))))
 
 (qiang-set-font
-'("Consolas" "Courier New" "Monaco" "DejaVu Sans Mono" "Monospace") ":pixelsize=15"
+'("Courier New" "Consolas" "Monaco" "DejaVu Sans Mono" "Monospace") ":pixelsize=15"
 '("Microsoft Yahei" "文泉驿等宽微米黑" "黑体" "新宋体" "宋体"))
 
 
