@@ -84,3 +84,6 @@
 
 ;; git
 (require 'magit)
+
+;; tramp
+(require 'tramp-settings)
